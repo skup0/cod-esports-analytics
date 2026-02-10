@@ -1,17 +1,16 @@
-# CDL Match Prediction & Fantasy Draft Analysis
+# CDL Match Prediction
 
-**Data science project: predictive modeling and fantasy rankings for Call of Duty League (CDL) esports.**
+**Data science project: predictive modeling for Call of Duty League (CDL) esports.**
 
-End-to-end pipeline that combines **team + player statistics** with **multiple ML classifiers** and **Monte Carlo simulation** to predict match outcomes and best-of-5 score distributions. Includes a separate fantasy draft ranking system for CDL leagues.
+End-to-end pipeline that combines **team + player statistics** with **multiple ML classifiers** and **Monte Carlo simulation** to predict match outcomes and best-of-5 score distributions.
 
 ---
 
-## Highlights (resume-friendly)
+## Highlights
 
 - **Predictive modeling**: Trained and compared 7 classifiers (Logistic Regression, Random Forest, Gradient Boosting, SVM RBF/Linear, K-NN, Naive Bayes) with **repeated stratified K-fold cross-validation**; selected best model at **~95% accuracy** on 132 matchup samples, 55 engineered features.
 - **Feature engineering**: Built matchup-level features from **team stats** (HP/SND/OVL win%, KD, plus/minus) and **aggregated player stats** per team; standardized and validated on all 12 CDL teams.
 - **Probabilistic simulation**: **Monte Carlo Bo5 simulator** (10k runs) with mode-specific win probabilities (HP → SND → OVL map order); combined with ML classifier in a 50/50 ensemble for final win probability and most-likely score (e.g. 3–0, 3–1, 3–2).
-- **Fantasy analytics**: Custom **z-score composite** over league categories (K/D, HP K/10m, SND KpR, OVL K/D, plants+defuses, overloads/game) to rank players for CDL fantasy draft; outputs Top 20 with key stats.
 - **Reproducible workflow**: Jupyter notebooks, pandas/numpy for EDA and feature construction, scikit-learn for modeling and evaluation, matplotlib for visualizations (e.g. predicted wins per team).
 
 ---
@@ -22,10 +21,9 @@ End-to-end pipeline that combines **team + player statistics** with **multiple M
 cod-analysis/
 ├── README.md
 ├── cod-analysis.ipynb    # Match prediction: models, simulation, predict(), week predictions, viz
-├── draft-pick.ipynb       # Fantasy draft: category weights, z-score ranking, Top 20
-├── team_stats.csv        # Team-level stats (HP/SND/OVL win%, KD, etc.)
-├── player_stats.csv      # Player-level stats (K/D, HP K/10m, SND KpR, OVL, etc.)
-└── team_roster.csv       # Player → team mapping
+├── team_stats.csv       # Team-level stats (HP/SND/OVL win%, KD, etc.)
+├── player_stats.csv     # Player-level stats (K/D, HP K/10m, SND KpR, OVL, etc.)
+└── team_roster.csv      # Player → team mapping
 ```
 
 ---
@@ -51,14 +49,6 @@ Teams covered: OpTic Texas, FaZe Vegas, G2 Minnesota, Paris Gentle Mates, Los An
 
 ---
 
-## Fantasy draft ranking (draft-pick.ipynb)
-
-- Defines **league categories** and weights (e.g. K/D, HP K/10m, SND KpR, OVL K/D, plants+defuses per series, overloads per game).
-- Normalizes relevant columns; computes **z-scores** and weighted composite score per player.
-- Ranks players and prints **Top 20** with team and key stats for draft decisions.
-
----
-
 ## Requirements
 
 - Python 3.x  
@@ -76,9 +66,8 @@ pip install pandas numpy scikit-learn matplotlib
 
 ## How to run
 
-1. Clone or download the repo; ensure the three CSVs are in the same directory as the notebooks.
+1. Clone or download the repo; ensure the three CSVs are in the same directory as the notebook.
 2. Open **cod-analysis.ipynb**: run cells top to bottom to train models, then use `predict("OpTic Texas", "FaZe Vegas")` or `predict_str(...)` for a one-line summary.
-3. Open **draft-pick.ipynb**: run all cells to generate the Top 20 fantasy draft ranking.
 
 ---
 
@@ -87,8 +76,8 @@ pip install pandas numpy scikit-learn matplotlib
 - Backtest predictions against actual CDL results when available.
 - Add more features (recent form, head-to-head, map veto assumptions).
 - Tune hyperparameters (e.g. grid search for SVM C, RF depth).
-- Deploy as a small API or Streamlit app for interactive matchup and draft queries.
+- Deploy as a small API or Streamlit app for interactive matchup queries.
 
 ---
 
-*Built for portfolio and resume use; data reflects CDL structure and typical stat sources.*
+*Data reflects CDL structure and typical stat sources.*
